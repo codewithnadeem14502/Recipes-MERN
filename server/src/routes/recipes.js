@@ -1,6 +1,7 @@
 import express from "express";
-import mongoose from "mongoose";
+
 import { RecipesModal } from "../models/Recipes.js";
+import { UserModal } from "../models/users.js";
 
 const router = express.Router();
 
@@ -9,6 +10,18 @@ router.get("/", async (req, res) => {
     const respond = await RecipesModal.find({});
 
     res.json(respond);
+  } catch (error) {
+    res.json(error);
+  }
+});
+router.get("/details/:id", async (req, res) => {
+  try {
+    const data = await RecipesModal.findById(req.params.id);
+    const id = data.userOwner;
+    const userid = await UserModal.findById(id);
+    const username = userid.username;
+    res.json({ data, username });
+    // res.send({ data, username });
   } catch (error) {
     res.json(error);
   }
@@ -26,21 +39,20 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
+  const recipe = await RecipesModal.findById(req.body.recipeID);
+  const user = await UserModal.findById(req.body.userID);
   try {
-    const recipe = await RecipesModal.findById(req.body.recipeID);
-    const user = await RecipesModal.findById(req.body.userID);
-
     user.savedRecipes.push(recipe);
     await user.save();
-    res.json({ savedRecipes: user.savedRecipes });
-  } catch (error) {
-    res.json(error);
+    res.status(201).json({ savedRecipes: user.savedRecipes });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
-router.get("/savedrecipes/:id", async (req, res) => {
+router.get("/savedRecipes/ids/:userID", async (req, res) => {
   try {
-    const user = await RecipesModal.findById(req.body.userID);
+    const user = await RecipesModal.findById(req.params.userID);
     res.json({ savedRecipes: user?.savedRecipes });
   } catch (error) {
     res.json(error);
@@ -55,6 +67,21 @@ router.get("/savedrecipes", async (req, res) => {
     res.json({ savedRecipes });
   } catch (error) {
     res.json(error);
+  }
+});
+// Get saved recipes
+router.get("/savedRecipes/:userId", async (req, res) => {
+  try {
+    const user = await UserModal.findById(req.params.userId);
+    const savedRecipes = await RecipesModal.find({
+      _id: { $in: user.savedRecipes },
+    });
+
+    console.log(savedRecipes);
+    res.status(201).json({ savedRecipes });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 

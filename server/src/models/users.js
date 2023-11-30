@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
+  savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
 });
 
 export const UserModal = mongoose.model("users", UserSchema);

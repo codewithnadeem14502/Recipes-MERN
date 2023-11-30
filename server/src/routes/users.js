@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 import { UserModal } from "../models/users.js";
 const router = express.Router();
 
