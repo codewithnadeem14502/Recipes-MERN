@@ -20,7 +20,7 @@ const Navbar = () => {
     open == false ? setOpen(true) : setOpen(false);
   };
   return (
-    <nav className="bg-blue-500 p-4 md:flex md:justify-between md:items-center">
+    <nav className="bg-yellow-500 p-4 md:flex md:justify-between md:items-center">
       <div className="container mx-auto md:flex md:justify-between md:items-center">
         <button className="md:hidden text-white p-3 focus:outline-none ">
           <svg

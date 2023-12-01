@@ -57,6 +57,8 @@ const Details = () => {
         });
         setSavedRecipes(response.data.savedRecipes);
         // console.log(reponse);
+        const message = "Saved Recipe";
+        enqueueSnackbar(message, { variant: "success" });
       } catch (err) {
         console.log(err);
       }
