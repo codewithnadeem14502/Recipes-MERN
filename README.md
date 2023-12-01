@@ -1,7 +1,7 @@
 
 
 <h1 align="center" id="title">Recipe-App</h1>
-
+<p id="description">Just cooked up a recipe app in 2 days! 🔐 Implemented JWT auth and secure passwords for top-notch security. 🍲 Create, explore, and add favorites hassle-free! 🌟.</p>
 
 
 
